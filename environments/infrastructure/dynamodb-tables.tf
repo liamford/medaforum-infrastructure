@@ -1,24 +1,19 @@
-resource "aws_dynamodb_table" "basic-dynamodb-table" {
+resource "aws_dynamodb_table" "question-table" {
     name           = "Questions"
     billing_mode   = "PROVISIONED"
     read_capacity  = 2
     write_capacity = 2
     hash_key       = "QuestionId"
-    range_key      = "UserId"
 
     attribute {
         name = "QuestionId"
         type = "S"
     }
 
-    attribute {
-        name = "QuestionTitle"
-        type = "S"
-    }
 
     attribute {
         name = "Timestamp"
-        type = "S"
+        type = "N"
     }
 
     attribute {
@@ -36,12 +31,6 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
         type = "N"
     }
 
-    local_secondary_index {
-        name = "QuestionTitleIndex"
-        projection_type = "ALL"
-        range_key = "QuestionTitle"
-    }
-
 
     global_secondary_index {
         name               = "QuestionStatusIndex"
@@ -50,7 +39,7 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
         write_capacity     = 2
         read_capacity      = 2
         projection_type    = "INCLUDE"
-        non_key_attributes = ["QuestionId","QuestionTitle","UserId"]
+        non_key_attributes = ["QuestionId","QuestionTitle","UserId","User","QuestionGroup"]
     }
 
     global_secondary_index {
@@ -60,7 +49,7 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
         write_capacity     = 2
         read_capacity      = 2
         projection_type    = "INCLUDE"
-        non_key_attributes = ["QuestionId","QuestionTitle","UserId","Status"]
+        non_key_attributes = ["QuestionId","QuestionTitle","UserId","Status","User","QuestionGroup"]
     }
 
     global_secondary_index {
@@ -70,11 +59,11 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
         write_capacity     = 2
         read_capacity      = 2
         projection_type    = "INCLUDE"
-        non_key_attributes = ["QuestionId","Timestamp","QuestionTitle"]
+        non_key_attributes = ["QuestionId","Timestamp","QuestionTitle","QuestionGroup","User"]
     }
 
     tags = {
-        Name = "basic-dynamodb-table"
+        Name = "question-table"
         environment = var.profile
     }
 }
