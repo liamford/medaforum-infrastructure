@@ -32,8 +32,9 @@ resource "aws_ecs_task_definition" "medaforum_app" {
     "name": "medaforum_app",
     "networkMode": "awsvpc",
     "environment": [
-            {"name": "region", "value": "us-east-1"},
-            {"name": "endpoint", "value": "dynamodb.us-east-1.amazonaws.com"}
+            {"name": "region", "value": "${var.region}"},
+            {"name": "endpoint", "value": "dynamodb.${var.region}.amazonaws.com"},
+            {"name": "sns", "value": "${var.sns}"}
         ],
     "secrets": [
             {"name": "aws_key", "valueFrom": "${aws_ssm_parameter.access.arn}"},

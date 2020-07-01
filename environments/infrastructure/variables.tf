@@ -42,4 +42,9 @@ variable "dynamodb_secret" {
     default     = "ic7t14VwLshmL6dr013XNNZretHEe0XTOdt+6Ps1"
 }
 
+variable "sns" {
+    type = string
+    default = "questions"
+}
+
 
