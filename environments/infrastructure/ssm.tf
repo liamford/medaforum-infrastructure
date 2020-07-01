@@ -2,7 +2,7 @@ resource "aws_ssm_parameter" "access" {
     name        = "/dynamodb/access"
     description = "The parameter description"
     type        = "SecureString"
-    value       = "${var.dynamodb_access_key}"
+    value       = "${var.service_access_key}"
 
     tags = {
         Name = "ssm-dynamodb-access"
@@ -14,7 +14,7 @@ resource "aws_ssm_parameter" "secret" {
     name        = "/dynamodb/secret"
     description = "The parameter description"
     type        = "SecureString"
-    value       = "${var.dynamodb_secret}"
+    value       = "${var.service_secret}"
 
     tags = {
         Name = "ssm-dynamodb-secret"

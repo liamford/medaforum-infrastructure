@@ -19,10 +19,10 @@ resource "aws_alb_target_group" "medaforum_app" {
     target_type = "ip"
     health_check {
         healthy_threshold   = 3
-        unhealthy_threshold = 2
-        timeout             = 10
+        unhealthy_threshold = 5
+        timeout             = 30
         path                = "/actuator/health"
-        interval            = 30
+        interval            = 60
     }
     stickiness {
         type = "lb_cookie"

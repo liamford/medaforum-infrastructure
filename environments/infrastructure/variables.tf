@@ -32,14 +32,12 @@ variable "fargate_memory" {
     default     = "2048"
 }
 
-variable "dynamodb_access_key" {
+variable "service_access_key" {
     description = "access key"
-    default     = "AKIA4JN5DTNMHYI7GSEM"
 }
 
-variable "dynamodb_secret" {
+variable "service_secret" {
     description = "Secret"
-    default     = "ic7t14VwLshmL6dr013XNNZretHEe0XTOdt+6Ps1"
 }
 
 variable "sns" {
