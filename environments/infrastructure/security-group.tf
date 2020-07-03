@@ -73,3 +73,38 @@ resource "aws_security_group" "ecs_tasks" {
         environment = var.profile
     }
 }
+
+resource "aws_security_group" "ecs_sms_tasks" {
+    name = "medaforum-sms-tasks"
+    description = "allow inbound access from the ALB only"
+    vpc_id = aws_vpc.main.id
+
+    ingress {
+        protocol = "tcp"
+        from_port = var.sms_app_port
+        to_port = var.sms_app_port
+        security_groups = [
+            aws_security_group.lb.id]
+    }
+
+    ingress {
+        protocol = "tcp"
+        from_port = 8080
+        to_port = 8080
+        security_groups = [
+            aws_security_group.lb.id]
+    }
+
+    egress {
+        protocol = "-1"
+        from_port = 0
+        to_port = 0
+        cidr_blocks = [
+            "0.0.0.0/0"]
+    }
+
+    tags = {
+        Name = "ecs_security_group"
+        environment = var.profile
+    }
+}
