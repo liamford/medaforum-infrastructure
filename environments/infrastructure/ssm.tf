@@ -81,3 +81,15 @@ resource "aws_ssm_parameter" "okta_secret" {
         environment = var.profile
     }
 }
+
+resource "aws_ssm_parameter" "email_api_token" {
+    name        = "/twilio/email_api_token"
+    description = "The parameter description"
+    type        = "SecureString"
+    value       = "${var.email_api_token}"
+
+    tags = {
+        Name = "ssm-email-api-secret"
+        environment = var.profile
+    }
+}

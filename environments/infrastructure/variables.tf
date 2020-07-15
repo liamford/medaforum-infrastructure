@@ -22,6 +22,11 @@ variable "sms_app_port" {
     default     = 8080
 }
 
+variable "email_app_port" {
+    description = "Port exposed by the docker image to redirect traffic to"
+    default     = 8080
+}
+
 variable "app_count" {
     description = "Number of docker containers to run"
     default     = 2
@@ -68,9 +73,17 @@ variable "okta_issuer" {
     description = "okta_client_secret"
 }
 
+variable "email_api_token" {
+    description = "email_api_token"
+}
+
 variable "sns" {
     type = string
     default = "questions"
+}
+variable "question_template_id" {
+    type = string
+    default = "d-91db01aeea294061848760d862688e33"
 }
 
 
