@@ -9,3 +9,9 @@ module "sms_ecr" {
     version = "3.0.0"
     name = "sms"
 }
+
+module "email_ecr" {
+    source = "QuiNovas/ecr/aws"
+    version = "3.0.0"
+    name = "email"
+}
