@@ -57,3 +57,27 @@ resource "aws_ssm_parameter" "sender_phone" {
         environment = var.profile
     }
 }
+
+resource "aws_ssm_parameter" "okta_id" {
+    name        = "/okta/client_id"
+    description = "The parameter description"
+    type        = "SecureString"
+    value       = "${var.okta_client_id}"
+
+    tags = {
+        Name = "ssm-okta-client-id"
+        environment = var.profile
+    }
+}
+
+resource "aws_ssm_parameter" "okta_secret" {
+    name        = "/okta/client_secret"
+    description = "The parameter description"
+    type        = "SecureString"
+    value       = "${var.okta_client_secret}"
+
+    tags = {
+        Name = "ssm-okta-client-secret"
+        environment = var.profile
+    }
+}

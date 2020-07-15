@@ -56,6 +56,18 @@ variable "sender_phone" {
     description = "sender_phone"
 }
 
+variable "okta_client_id" {
+    description = "okta_client_id"
+}
+
+variable "okta_client_secret" {
+    description = "okta_client_secret"
+}
+
+variable "okta_issuer" {
+    description = "okta_client_secret"
+}
+
 variable "sns" {
     type = string
     default = "questions"

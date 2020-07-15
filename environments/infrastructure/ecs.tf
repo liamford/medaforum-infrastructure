@@ -38,11 +38,14 @@ resource "aws_ecs_task_definition" "medaforum_app" {
     "environment": [
             {"name": "region", "value": "${var.region}"},
             {"name": "endpoint", "value": "dynamodb.${var.region}.amazonaws.com"},
-            {"name": "sns", "value": "${var.sns}"}
+            {"name": "sns", "value": "${var.sns}"},
+            {"name": "okta_issuer", "value": "${var.okta_issuer}"}
         ],
     "secrets": [
             {"name": "aws_key", "valueFrom": "${aws_ssm_parameter.access.arn}"},
-            {"name": "aws_secret", "valueFrom": "${aws_ssm_parameter.secret.arn}"}
+            {"name": "aws_secret", "valueFrom": "${aws_ssm_parameter.secret.arn}"},
+            {"name": "okta_client_id", "valueFrom": "${aws_ssm_parameter.okta_id.arn}"},
+            {"name": "okta_client_secret", "valueFrom": "${aws_ssm_parameter.okta_secret.arn}"}
         ],
     "logConfiguration": {
         "logDriver": "awslogs",
