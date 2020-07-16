@@ -139,7 +139,7 @@ resource "aws_ecs_task_definition" "medaforum_email" {
     "networkMode": "awsvpc",
     "environment": [
             {"name": "region", "value": "${var.region}"},
-            {"question_template_id": "region", "value": "${var.question_template_id}"}
+            {"name": "question_template_id", "value": "${var.question_template_id}"}
         ],
     "secrets": [
             {"name": "aws_key", "valueFrom": "${aws_ssm_parameter.access.arn}"},
