@@ -48,6 +48,8 @@ resource "aws_ecs_task_definition" "medaforum_app" {
     "secrets": [
             {"name": "aws_key", "valueFrom": "${aws_ssm_parameter.access.arn}"},
             {"name": "aws_secret", "valueFrom": "${aws_ssm_parameter.secret.arn}"},
+            {"name": "sid", "valueFrom": "${aws_ssm_parameter.sid.arn}"},
+            {"name": "token", "valueFrom": "${aws_ssm_parameter.token.arn}"},
             {"name": "okta_client_id", "valueFrom": "${aws_ssm_parameter.okta_id.arn}"},
             {"name": "okta_client_secret", "valueFrom": "${aws_ssm_parameter.okta_secret.arn}"}
         ],
