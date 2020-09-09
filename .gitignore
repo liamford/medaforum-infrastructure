@@ -2,5 +2,6 @@
 *.tfstate.backup
 *.tfvars
 .idea/
+.terraform/
 environments/backend-state/.terraform
 environments/infrastructure/.terraform
