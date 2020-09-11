@@ -4,6 +4,12 @@ module "general_ecr" {
     name = "medaforum"
 }
 
+module "admin_ecr" {
+    source = "QuiNovas/ecr/aws"
+    version = "3.0.0"
+    name = "admin"
+}
+
 module "sms_ecr" {
     source = "QuiNovas/ecr/aws"
     version = "3.0.0"
