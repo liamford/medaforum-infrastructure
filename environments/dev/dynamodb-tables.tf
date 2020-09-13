@@ -22,6 +22,11 @@ resource "aws_dynamodb_table" "question-table" {
     }
 
     attribute {
+        name = "DoctorId"
+        type = "S"
+    }
+
+    attribute {
         name = "Status"
         type = "N"
     }
@@ -39,7 +44,7 @@ resource "aws_dynamodb_table" "question-table" {
         write_capacity     = 2
         read_capacity      = 2
         projection_type    = "INCLUDE"
-        non_key_attributes = ["QuestionId","QuestionTitle","User","GeneralQuestions"]
+        non_key_attributes = ["QuestionId","QuestionTitle","User","GeneralQuestions","DoctorId"]
     }
 
     global_secondary_index {
@@ -55,6 +60,16 @@ resource "aws_dynamodb_table" "question-table" {
     global_secondary_index {
         name               = "QuestionUserIndex"
         hash_key           = "UserId"
+        range_key          = "Status"
+        write_capacity     = 2
+        read_capacity      = 2
+        projection_type    = "INCLUDE"
+        non_key_attributes = ["QuestionId","Timestamp","QuestionTitle","QuestionGroup","User"]
+    }
+
+    global_secondary_index {
+        name               = "QuestionDoctorIndex"
+        hash_key           = "DoctorId"
         range_key          = "Status"
         write_capacity     = 2
         read_capacity      = 2
