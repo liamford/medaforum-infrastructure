@@ -8,6 +8,16 @@ resource "aws_cloudwatch_log_group" "medaforum_log_group" {
     }
 }
 
+resource "aws_cloudwatch_log_group" "admin_log_group" {
+    name = "/ecs/medaforum_admin"
+    retention_in_days = 30
+
+    tags = {
+        Name = "medaforum-admin-log-group"
+        environment = var.profile
+    }
+}
+
 resource "aws_cloudwatch_log_group" "sms_log_group" {
     name = "/ecs/medaforum_sms"
     retention_in_days = 30

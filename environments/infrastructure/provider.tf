@@ -6,7 +6,7 @@ provider "aws" {
 
 terraform {
     backend "s3" {
-        bucket = "medaforum-s3-bucket-state-dev-one"
+        bucket = "medaforum-s3-bucket-state-dev-meda1234567"
         key = "terraform/tfstate"
         encrypt = false
         region = "us-east-1"

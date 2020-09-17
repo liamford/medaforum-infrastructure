@@ -65,8 +65,16 @@ variable "okta_client_id" {
     description = "okta_client_id"
 }
 
+variable "okta_admin_client_id" {
+    description = "okta_admin_client_id"
+}
+
 variable "okta_client_secret" {
     description = "okta_client_secret"
+}
+
+variable "okta_admin_client_secret" {
+    description = "okta_admin-client_secret"
 }
 
 variable "okta_issuer" {

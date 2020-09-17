@@ -70,6 +70,18 @@ resource "aws_ssm_parameter" "okta_id" {
     }
 }
 
+resource "aws_ssm_parameter" "okta_admin_id" {
+    name        = "/okta/admin_client_id"
+    description = "The parameter description"
+    type        = "SecureString"
+    value       = "${var.okta_admin_client_id}"
+
+    tags = {
+        Name = "ssm-okta-admin-client-id"
+        environment = var.profile
+    }
+}
+
 resource "aws_ssm_parameter" "okta_secret" {
     name        = "/okta/client_secret"
     description = "The parameter description"
@@ -78,6 +90,18 @@ resource "aws_ssm_parameter" "okta_secret" {
 
     tags = {
         Name = "ssm-okta-client-secret"
+        environment = var.profile
+    }
+}
+
+resource "aws_ssm_parameter" "okta_admin_secret" {
+    name = "/okta/admin_client_secret"
+    description = "The parameter description"
+    type = "SecureString"
+    value = "${var.okta_admin_client_secret}"
+
+    tags = {
+        Name = "ssm-okta-admin-client-secret"
         environment = var.profile
     }
 }
