@@ -195,6 +195,7 @@ resource "aws_ecs_task_definition" "medaforum_email" {
     "networkMode": "awsvpc",
     "environment": [
             {"name": "medaforum_url", "value": "${aws_alb.main.dns_name}"},
+            {"name": "admin_url", "value": "${aws_alb.admin.dns_name}"},
             {"name": "region", "value": "${var.region}"},
             {"name": "question_template_id", "value": "${var.question_template_id}"}
         ],
