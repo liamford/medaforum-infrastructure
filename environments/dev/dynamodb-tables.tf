@@ -54,7 +54,7 @@ resource "aws_dynamodb_table" "question-table" {
         write_capacity     = 2
         read_capacity      = 2
         projection_type    = "INCLUDE"
-        non_key_attributes = ["QuestionId","QuestionTitle","UserId","Status","User","QuestionGroup"]
+        non_key_attributes = ["QuestionId","QuestionTitle","UserId","Status","User","QuestionGroup","Answer","GeneralQuestions","MoreInformation","DoctorId"]
     }
 
     global_secondary_index {
