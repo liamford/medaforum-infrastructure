@@ -47,7 +47,8 @@ resource "aws_ecs_task_definition" "medaforum_app" {
             {"name": "region", "value": "${var.region}"},
             {"name": "endpoint", "value": "dynamodb.${var.region}.amazonaws.com"},
             {"name": "sns", "value": "${var.sns}"},
-            {"name": "okta_issuer", "value": "${var.okta_issuer}"}
+            {"name": "okta_issuer", "value": "${var.okta_issuer}"},
+            {"name": "algolia_index", "value": "${var.algolia_index}"}
         ],
     "secrets": [
             {"name": "aws_key", "valueFrom": "${aws_ssm_parameter.access.arn}"},
@@ -55,7 +56,9 @@ resource "aws_ecs_task_definition" "medaforum_app" {
             {"name": "sid", "valueFrom": "${aws_ssm_parameter.sid.arn}"},
             {"name": "token", "valueFrom": "${aws_ssm_parameter.token.arn}"},
             {"name": "okta_client_id", "valueFrom": "${aws_ssm_parameter.okta_id.arn}"},
-            {"name": "okta_client_secret", "valueFrom": "${aws_ssm_parameter.okta_secret.arn}"}
+            {"name": "okta_client_secret", "valueFrom": "${aws_ssm_parameter.okta_secret.arn}"},
+            {"name": "algolia_application", "valueFrom": "${aws_ssm_parameter.algolia_application_id.arn}"},
+            {"name": "algolia_key", "valueFrom": "${aws_ssm_parameter.algolia_api_key.arn}"}
         ],
     "logConfiguration": {
         "logDriver": "awslogs",
@@ -99,13 +102,16 @@ resource "aws_ecs_task_definition" "medaforum_admin" {
             {"name": "region", "value": "${var.region}"},
             {"name": "endpoint", "value": "dynamodb.${var.region}.amazonaws.com"},
             {"name": "sns", "value": "${var.sns}"},
-            {"name": "okta_issuer", "value": "${var.okta_issuer}"}
+            {"name": "okta_issuer", "value": "${var.okta_issuer}"},
+            {"name": "algolia_index", "value": "${var.algolia_index}"}
         ],
     "secrets": [
             {"name": "aws_key", "valueFrom": "${aws_ssm_parameter.access.arn}"},
             {"name": "aws_secret", "valueFrom": "${aws_ssm_parameter.secret.arn}"},
             {"name": "okta_client_id", "valueFrom": "${aws_ssm_parameter.okta_admin_id.arn}"},
-            {"name": "okta_client_secret", "valueFrom": "${aws_ssm_parameter.okta_admin_secret.arn}"}
+            {"name": "okta_client_secret", "valueFrom": "${aws_ssm_parameter.okta_admin_secret.arn}"},
+            {"name": "algolia_application", "valueFrom": "${aws_ssm_parameter.algolia_application_id.arn}"},
+            {"name": "algolia_key", "valueFrom": "${aws_ssm_parameter.algolia_api_key.arn}"}
         ],
     "logConfiguration": {
         "logDriver": "awslogs",

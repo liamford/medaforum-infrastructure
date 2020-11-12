@@ -85,6 +85,19 @@ variable "email_api_token" {
     description = "email_api_token"
 }
 
+variable "algolia_application_id" {
+    description = "algolia_application_id"
+}
+
+variable "algolia_api_key" {
+    description = "algolia_api_key"
+}
+
+variable "algolia_index" {
+    type = string
+    default = "prod"
+}
+
 variable "sns" {
     type = string
     default = "questions"

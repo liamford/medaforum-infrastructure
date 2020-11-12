@@ -117,3 +117,27 @@ resource "aws_ssm_parameter" "email_api_token" {
         environment = var.profile
     }
 }
+
+resource "aws_ssm_parameter" "algolia_application_id" {
+    name        = "/algolia/algolia_application_id"
+    description = "The parameter description"
+    type        = "SecureString"
+    value       = "${var.algolia_application_id}"
+
+    tags = {
+        Name = "algolia_application_id"
+        environment = var.profile
+    }
+}
+
+resource "aws_ssm_parameter" "algolia_api_key" {
+    name        = "/algolia/algolia_api_key"
+    description = "The parameter description"
+    type        = "SecureString"
+    value       = "${var.algolia_api_key}"
+
+    tags = {
+        Name = "algolia_api_key"
+        environment = var.profile
+    }
+}
