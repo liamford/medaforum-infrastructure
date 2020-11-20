@@ -203,7 +203,11 @@ resource "aws_ecs_task_definition" "medaforum_email" {
             {"name": "medaforum_url", "value": "${aws_alb.main.dns_name}"},
             {"name": "admin_url", "value": "${aws_alb.admin.dns_name}"},
             {"name": "region", "value": "${var.region}"},
-            {"name": "question_template_id", "value": "${var.question_template_id}"}
+            {"name": "user_template_question_id", "value": "${var.user_template_question_id}"},
+            {"name": "user_template_answer_id", "value": "${var.user_template_answer_id}"},
+            {"name": "admin_template_question_id", "value": "${var.admin_template_question_id}"},
+            {"name": "admin_template_moreinfo_id", "value": "${var.admin_template_moreinfo_id}"},
+            {"name": "user_template_moreinfo_id", "value": "${var.user_template_moreinfo_id}"}
         ],
     "secrets": [
             {"name": "aws_key", "valueFrom": "${aws_ssm_parameter.access.arn}"},

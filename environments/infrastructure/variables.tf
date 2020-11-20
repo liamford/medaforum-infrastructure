@@ -102,9 +102,26 @@ variable "sns" {
     type = string
     default = "questions"
 }
-variable "question_template_id" {
+variable "user_template_question_id" {
     type = string
     default = "d-91db01aeea294061848760d862688e33"
+}
+variable "user_template_answer_id" {
+    type = string
+    default = "d-07bb3acabacb4246aad9b91ec7740878"
+}
+variable "admin_template_question_id" {
+    type = string
+    default = "d-e7c844b9904c47378566af53764a8a6f"
+}
+variable "admin_template_moreinfo_id" {
+    type = string
+    default = "d-96a6854a0cdf46d9873485f1abbcf462"
+}
+
+variable "user_template_moreinfo_id" {
+    type = string
+    default = "d-cc2ec3b027b645cea98cf4490889ab4b"
 }
 
 
