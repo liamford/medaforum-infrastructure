@@ -159,7 +159,8 @@ resource "aws_ecs_task_definition" "medaforum_sms" {
             {"name": "aws_secret", "valueFrom": "${aws_ssm_parameter.secret.arn}"},
             {"name": "sid", "valueFrom": "${aws_ssm_parameter.sid.arn}"},
             {"name": "token", "valueFrom": "${aws_ssm_parameter.token.arn}"},
-            {"name": "sender_phone", "valueFrom": "${aws_ssm_parameter.sender_phone.arn}"}
+            {"name": "sender_phone", "valueFrom": "${aws_ssm_parameter.sender_phone.arn}"},
+            {"name": "medaforum_url", "value": "${aws_alb.main.dns_name}"}
         ],
     "logConfiguration": {
         "logDriver": "awslogs",
