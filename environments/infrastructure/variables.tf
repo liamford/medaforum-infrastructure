@@ -27,17 +27,43 @@ variable "email_app_port" {
     default     = 8080
 }
 
-variable "app_count" {
+variable "main_app_count" {
     description = "Number of docker containers to run"
     default     = 2
 }
 
-variable "fargate_cpu" {
+variable "notification_app_count" {
+    description = "Number of docker containers to run"
+    default     = 1
+}
+
+variable "site_cpu" {
+    description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
+    default     = "2048"
+}
+
+variable "admin_cpu" {
     description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
     default     = "1024"
 }
 
-variable "fargate_memory" {
+variable "notification_cpu" {
+    description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
+    default     = "1024"
+}
+
+variable "site_memory" {
+    description = "Fargate instance memory to provision (in MiB)"
+    default     = "8192"
+}
+
+variable "admin_memory" {
+    description = "Fargate instance memory to provision (in MiB)"
+    default     = "4096"
+}
+
+
+variable "notification_memory" {
     description = "Fargate instance memory to provision (in MiB)"
     default     = "2048"
 }

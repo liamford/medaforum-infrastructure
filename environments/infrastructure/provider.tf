@@ -6,11 +6,11 @@ provider "aws" {
 
 terraform {
     backend "s3" {
-        bucket = "medaforum-s3-bucket-state-dev-meda1234567"
+        bucket = "medaforum-s3-bucket-state"
         key = "terraform/tfstate"
         encrypt = false
-        region = "us-east-1"
-        dynamodb_table = "medaforum-dynamodb-table-state-dev"
-        profile = "dev"
+        region = "ap-southeast-2"
+        dynamodb_table = "medaforum-dynamodb-table-state"
+        profile = "medaforum"
     }
 }

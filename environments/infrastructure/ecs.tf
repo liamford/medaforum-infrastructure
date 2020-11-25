@@ -28,8 +28,8 @@ resource "aws_ecs_task_definition" "medaforum_app" {
     network_mode = "awsvpc"
     requires_compatibilities = [
         "FARGATE"]
-    cpu = var.fargate_cpu
-    memory = var.fargate_memory
+    cpu = var.site_cpu
+    memory = var.site_memory
     execution_role_arn = "${data.aws_iam_role.ecs_task_execution_role.arn}"
     tags = {
         Name = "medaforum_app"
@@ -38,9 +38,9 @@ resource "aws_ecs_task_definition" "medaforum_app" {
     container_definitions = <<DEFINITION
 [
   {
-    "cpu": ${var.fargate_cpu},
+    "cpu": ${var.site_cpu},
     "image": "${data.aws_ecr_repository.ecr.repository_url}",
-    "memory": ${var.fargate_memory},
+    "memory": ${var.site_memory},
     "name": "medaforum_app",
     "networkMode": "awsvpc",
     "environment": [
@@ -83,8 +83,8 @@ resource "aws_ecs_task_definition" "medaforum_admin" {
     network_mode = "awsvpc"
     requires_compatibilities = [
         "FARGATE"]
-    cpu = var.fargate_cpu
-    memory = var.fargate_memory
+    cpu = var.admin_cpu
+    memory = var.admin_memory
     execution_role_arn = "${data.aws_iam_role.ecs_task_execution_role.arn}"
     tags = {
         Name = "medaforum_admin"
@@ -93,9 +93,9 @@ resource "aws_ecs_task_definition" "medaforum_admin" {
     container_definitions = <<DEFINITION
 [
   {
-    "cpu": ${var.fargate_cpu},
+    "cpu": ${var.admin_cpu},
     "image": "${data.aws_ecr_repository.ecr_admin.repository_url}",
-    "memory": ${var.fargate_memory},
+    "memory": ${var.admin_memory},
     "name": "medaforum_admin",
     "networkMode": "awsvpc",
     "environment": [
@@ -136,8 +136,8 @@ resource "aws_ecs_task_definition" "medaforum_sms" {
     network_mode = "awsvpc"
     requires_compatibilities = [
         "FARGATE"]
-    cpu = var.fargate_cpu
-    memory = var.fargate_memory
+    cpu = var.notification_cpu
+    memory = var.notification_memory
     execution_role_arn = "${data.aws_iam_role.ecs_task_execution_role.arn}"
     tags = {
         Name = "medaforum_sms"
@@ -146,21 +146,21 @@ resource "aws_ecs_task_definition" "medaforum_sms" {
     container_definitions = <<DEFINITION
 [
   {
-    "cpu": ${var.fargate_cpu},
+    "cpu": ${var.notification_cpu},
     "image": "${data.aws_ecr_repository.ecr_sms.repository_url}",
-    "memory": ${var.fargate_memory},
+    "memory": ${var.notification_memory},
     "name": "medaforum_sms",
     "networkMode": "awsvpc",
     "environment": [
-            {"name": "region", "value": "${var.region}"}
+            {"name": "region", "value": "${var.region}"},
+            {"name": "medaforum_url", "value": "https://www.medaforum.com"}
         ],
     "secrets": [
             {"name": "aws_key", "valueFrom": "${aws_ssm_parameter.access.arn}"},
             {"name": "aws_secret", "valueFrom": "${aws_ssm_parameter.secret.arn}"},
             {"name": "sid", "valueFrom": "${aws_ssm_parameter.sid.arn}"},
             {"name": "token", "valueFrom": "${aws_ssm_parameter.token.arn}"},
-            {"name": "sender_phone", "valueFrom": "${aws_ssm_parameter.sender_phone.arn}"},
-            {"name": "medaforum_url", "value": "${aws_alb.main.dns_name}"}
+            {"name": "sender_phone", "valueFrom": "${aws_ssm_parameter.sender_phone.arn}"}
         ],
     "logConfiguration": {
         "logDriver": "awslogs",
@@ -185,8 +185,8 @@ resource "aws_ecs_task_definition" "medaforum_email" {
     network_mode = "awsvpc"
     requires_compatibilities = [
         "FARGATE"]
-    cpu = var.fargate_cpu
-    memory = var.fargate_memory
+    cpu = var.notification_cpu
+    memory = var.notification_memory
     execution_role_arn = "${data.aws_iam_role.ecs_task_execution_role.arn}"
     tags = {
         Name = "medaforum_email"
@@ -195,14 +195,14 @@ resource "aws_ecs_task_definition" "medaforum_email" {
     container_definitions = <<DEFINITION
 [
   {
-    "cpu": ${var.fargate_cpu},
+    "cpu": ${var.notification_cpu},
     "image": "${data.aws_ecr_repository.ecr_email.repository_url}",
-    "memory": ${var.fargate_memory},
+    "memory": ${var.notification_memory},
     "name": "medaforum_email",
     "networkMode": "awsvpc",
     "environment": [
-            {"name": "medaforum_url", "value": "${aws_alb.main.dns_name}"},
-            {"name": "admin_url", "value": "${aws_alb.admin.dns_name}"},
+            {"name": "medaforum_url", "value": "https://www.medaforum.com"},
+            {"name": "admin_url", "value": "https://www.business.medaforum.com"},
             {"name": "region", "value": "${var.region}"},
             {"name": "user_template_question_id", "value": "${var.user_template_question_id}"},
             {"name": "user_template_answer_id", "value": "${var.user_template_answer_id}"},
@@ -218,7 +218,7 @@ resource "aws_ecs_task_definition" "medaforum_email" {
     "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/medaforum_sms",
+          "awslogs-group": "/ecs/medaforum_email",
           "awslogs-region": "${var.region}",
           "awslogs-stream-prefix": "ecs"
         }
@@ -238,7 +238,7 @@ resource "aws_ecs_service" "main" {
     name = "medaforum-ecs-service"
     cluster = aws_ecs_cluster.main.id
     task_definition = aws_ecs_task_definition.medaforum_app.arn
-    desired_count = var.app_count
+    desired_count = var.main_app_count
     launch_type = "FARGATE"
 
     network_configuration {
@@ -263,7 +263,7 @@ resource "aws_ecs_service" "admin" {
     name = "admin-ecs-service"
     cluster = aws_ecs_cluster.main.id
     task_definition = aws_ecs_task_definition.medaforum_admin.arn
-    desired_count = var.app_count
+    desired_count = var.main_app_count
     launch_type = "FARGATE"
 
     network_configuration {
@@ -288,7 +288,7 @@ resource "aws_ecs_service" "sms_service" {
     name = "sms-ecs-service"
     cluster = aws_ecs_cluster.main.id
     task_definition = aws_ecs_task_definition.medaforum_sms.arn
-    desired_count = var.app_count
+    desired_count = var.notification_app_count
     launch_type = "FARGATE"
 
     network_configuration {
@@ -306,7 +306,7 @@ resource "aws_ecs_service" "email_service" {
     name = "email-ecs-service"
     cluster = aws_ecs_cluster.main.id
     task_definition = aws_ecs_task_definition.medaforum_email.arn
-    desired_count = var.app_count
+    desired_count = var.notification_app_count
     launch_type = "FARGATE"
 
     network_configuration {
