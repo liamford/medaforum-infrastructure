@@ -319,3 +319,19 @@ resource "aws_ecs_service" "email_service" {
         aws_alb_listener.front_end
     ]
 }
+
+resource "aws_appautoscaling_target" "site_scale_target" {
+    service_namespace  = "ecs"
+    resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.main.name}"
+    scalable_dimension = "ecs:service:DesiredCount"
+    max_capacity       = var.ecs_autoscale_max_instances
+    min_capacity       = var.ecs_autoscale_min_instances
+}
+
+resource "aws_appautoscaling_target" "site_scale_mem_target" {
+    service_namespace  = "ecs"
+    resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.main.name}"
+    scalable_dimension = "ecs:service:DesiredCount"
+    max_capacity       = var.ecs_autoscale_max_instances
+    min_capacity       = var.ecs_autoscale_min_instances
+}

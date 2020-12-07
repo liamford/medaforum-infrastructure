@@ -29,7 +29,7 @@ variable "email_app_port" {
 
 variable "main_app_count" {
     description = "Number of docker containers to run"
-    default     = 2
+    default     = 1
 }
 
 variable "notification_app_count" {
@@ -150,4 +150,31 @@ variable "user_template_moreinfo_id" {
     default = "d-cc2ec3b027b645cea98cf4490889ab4b"
 }
 
+variable "ecs_as_cpu_low_threshold_per" {
+    default = "20"
+}
+
+# If the average CPU utilization over a minute rises to this threshold,
+# the number of containers will be increased (but not above ecs_autoscale_max_instances).
+variable "ecs_as_cpu_high_threshold_per" {
+    default = "80"
+}
+
+variable "ecs_as_memory_high_threshold_per" {
+    default = "80"
+}
+
+variable "ecs_as_memory_low_threshold_per" {
+    default = "5"
+}
+
+variable "ecs_autoscale_min_instances" {
+    default = "1"
+}
+
+# The maximum number of containers that should be running.
+# used by both autoscale-perf.tf and autoscale.time.tf
+variable "ecs_autoscale_max_instances" {
+    default = "8"
+}
 
