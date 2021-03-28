@@ -263,7 +263,7 @@ resource "aws_ecs_service" "admin" {
     name = "admin-ecs-service"
     cluster = aws_ecs_cluster.main.id
     task_definition = aws_ecs_task_definition.medaforum_admin.arn
-    desired_count = var.main_app_count
+    desired_count = var.admin_app_count
     launch_type = "FARGATE"
 
     network_configuration {
@@ -318,20 +318,4 @@ resource "aws_ecs_service" "email_service" {
     depends_on = [
         aws_alb_listener.front_end
     ]
-}
-
-resource "aws_appautoscaling_target" "site_scale_target" {
-    service_namespace  = "ecs"
-    resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.main.name}"
-    scalable_dimension = "ecs:service:DesiredCount"
-    max_capacity       = var.ecs_autoscale_max_instances
-    min_capacity       = var.ecs_autoscale_min_instances
-}
-
-resource "aws_appautoscaling_target" "site_scale_mem_target" {
-    service_namespace  = "ecs"
-    resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.main.name}"
-    scalable_dimension = "ecs:service:DesiredCount"
-    max_capacity       = var.ecs_autoscale_max_instances
-    min_capacity       = var.ecs_autoscale_min_instances
 }
